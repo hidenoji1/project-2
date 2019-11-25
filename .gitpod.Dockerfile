@@ -1,7 +1,7 @@
 FROM gitpod/workspace-full:latest
 
 ENV PHP_VERSION="7.2"
-ENV APACHE_DOCROOT_IN_REPO="www"
+ENV APACHE_DOCROOT_IN_REPO="public"
 
 USER root
 
@@ -40,4 +40,6 @@ xdebug.var_display_max_data=-1 \n\
 xdebug.var_display_max_depth=-1 \n\
 " >> /etc/php/${PHP_VERSION}/mods-available/xdebug.ini 
 
-RUN sed -ri "s!Listen \*:8001!Listen \*:8080!" -i "/etc/apache2/apache2.conf"
+RUN sed -ri "s!Listen \*:8001!Listen \*:8080!" -i "/etc/apache2/apache2.conf" \
+ && ln -s ${GITPOD_REPO_ROOT}/laravel/public ${GITPOD_REPO_ROOT}/public 
+
