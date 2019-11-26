@@ -45,31 +45,31 @@ RUN sed -ri "s!Listen \*:8001!Listen \*:8080!" -i "/etc/apache2/apache2.conf"
 RUN mkdir /var/run/mysqld \
  && chown -R gitpod:gitpod /var/run/mysqld /usr/share/mysql /var/lib/mysql /var/log/mysql /etc/mysql \
  && echo "[mysqld_safe] \n\
-socket = /var/run/mysqld/mysqld.sock \n\
-nice = 0 \n\
+socket=/var/run/mysqld/mysqld.sock \n\
+nice=0 \n\
 [mysqld] \n\
-user = gitpod \n\
-pid-file	= /var/run/mysqld/mysqld.pid \n\
-socket = /var/run/mysqld/mysqld.sock \n\
-port = 3306 \n\
-basedir = /usr \n\
-datadir = /var/lib/mysql \n\
-tmpdir = /tmp \n\
-lc-messages-dir	= /usr/share/mysql \n\
+user=gitpod \n\
+pid-file=/var/run/mysqld/mysqld.pid \n\
+socket=/var/run/mysqld/mysqld.sock \n\
+port=3306 \n\
+basedir=/usr \n\
+datadir=/var/lib/mysql \n\
+tmpdir=/tmp \n\
+lc-messages-dir=/usr/share/mysql \n\
 skip-external-locking \n\
-bind-address	= 0.0.0.0 \n\
-key_buffer_size = 16M \n\
-max_allowed_packet	= 16M \n\
-thread_stack = 192K \n\
-thread_cache_size = 8 \n\
-myisam-recover-options = BACKUP \n\
-query_cache_limit = 1M \n\
-query_cache_size = 16M \n\
-general_log_file = /var/log/mysql/mysql.log \n\
-general_log = 1\n\
-log_error = /var/log/mysql/error.log \n\
-expire_logs_days	= 10 \n\
-max_binlog_size = 100M" > /etc/mysql/my.cnf 
+bind-address=0.0.0.0 \n\
+key_buffer_size=16M \n\
+max_allowed_packet=16M \n\
+thread_stack=192K \n\
+thread_cache_size=8 \n\
+myisam-recover-options=BACKUP \n\
+query_cache_limit=1M \n\
+query_cache_size=16M \n\
+general_log_file=/var/log/mysql/mysql.log \n\
+general_log=1\n\
+log_error=/var/log/mysql/error.log \n\
+expire_logs_days=10 \n\
+max_binlog_size=100M" >> /etc/mysql/conf.d/my.cnf 
 
 USER gitpod
 
