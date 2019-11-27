@@ -9,6 +9,7 @@ USER root
 
 RUN apt-get update \
  && apt-get install -y apache2 mysql-server mysql-client \
+        mecab libmecab-dev mecab-ipadic-utf8 git make curl xz-utils file \
         php${PHP_VERSION} \
         php${PHP_VERSION}-common \
         php${PHP_VERSION}-cli \
