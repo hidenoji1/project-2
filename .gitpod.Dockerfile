@@ -81,3 +81,8 @@ RUN mysqld --daemonize --skip-grant-tables \
     && mysqladmin -uroot -p${MYSQL_ROOT_PASSWORD} shutdown;
     
 USER root
+
+RUN git clone --depth 1 https://github.com/neologd/mecab-ipadic-neologd.git \
+ && cd mecab-ipadic-neologd \
+ && bin/install-mecab-ipadic-neologd -n -y
+ && ln -s /usr/lib/x86_64-linux-gnu/mecab/dic /usr/lib/mecab/dic
