@@ -2,6 +2,8 @@ FROM gitpod/workspace-full:latest
 
 ENV PHP_VERSION="7.2"
 ENV APACHE_DOCROOT_IN_REPO="laravel/public"
+ENV APACHE_LISTEN_PORT="8080"
+ARG MYSQL_ROOT_PASSWORD="123456"
 
 USER root
 
@@ -40,7 +42,7 @@ xdebug.var_display_max_data=-1 \n\
 xdebug.var_display_max_depth=-1 \n\
 " >> /etc/php/${PHP_VERSION}/mods-available/xdebug.ini 
 
-RUN sed -ri "s!Listen \*:8001!Listen \*:8080!" -i "/etc/apache2/apache2.conf" 
+RUN sed -ri "s!Listen \*:8001!Listen \*:${APACHE_LISTEN_PORT}!" -i "/etc/apache2/apache2.conf" 
 
 RUN mkdir /var/run/mysqld \
  && chown -R gitpod:gitpod /var/run/mysqld /usr/share/mysql /var/lib/mysql /var/log/mysql /etc/mysql \
@@ -75,7 +77,7 @@ USER gitpod
 
 RUN mysqld --daemonize --skip-grant-tables \
     && sleep 3 \
-    && ( mysql -uroot -e "USE mysql; UPDATE user SET authentication_string=PASSWORD(\"123456\") WHERE user='root'; UPDATE user SET plugin=\"mysql_native_password\" WHERE user='root'; FLUSH PRIVILEGES;" ) \
-    && mysqladmin -uroot -p123456 shutdown;
+    && ( mysql -uroot -e "USE mysql; UPDATE user SET authentication_string=PASSWORD(\"${MYSQL_ROOT_PASSWORD}\") WHERE user='root'; UPDATE user SET plugin=\"mysql_native_password\" WHERE user='root'; FLUSH PRIVILEGES;" ) \
+    && mysqladmin -uroot -p${MYSQL_ROOT_PASSWORD} shutdown;
     
 USER root
