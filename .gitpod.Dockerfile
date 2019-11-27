@@ -26,6 +26,11 @@ RUN apt-get update \
         php-xdebug \    
  && apt-get clean && rm -rf /var/cache/apt/* && rm -rf /var/lib/apt/lists/* && rm -rf /tmp/*
 
+RUN git clone --depth 1 https://github.com/neologd/mecab-ipadic-neologd.git \
+ && cd mecab-ipadic-neologd \
+ && bin/install-mecab-ipadic-neologd -n -y \
+ && ln -s /usr/lib/x86_64-linux-gnu/mecab/dic /usr/lib/mecab/dic
+ 
 RUN echo "[xdebug] \n\
 xdebug.remote_host=127.0.0.1 \n\
 xdebug.remote_port=9002 \n\
@@ -82,7 +87,3 @@ RUN mysqld --daemonize --skip-grant-tables \
     
 USER root
 
-RUN git clone --depth 1 https://github.com/neologd/mecab-ipadic-neologd.git \
- && cd mecab-ipadic-neologd \
- && bin/install-mecab-ipadic-neologd -n -y \
- && ln -s /usr/lib/x86_64-linux-gnu/mecab/dic /usr/lib/mecab/dic
