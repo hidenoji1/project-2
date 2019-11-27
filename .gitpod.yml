@@ -7,7 +7,7 @@ ports:
   onOpen: ignore
 tasks:
 - name: Laravel
-  init: cd $GITPOD_REPO_ROOT/laravel && composer install && cp .env.example .env && php artisan key:generate --ansi
+  init: cd $GITPOD_REPO_ROOT/laravel && composer install && php artisan key:generate --ansi
 - name: Apache
   command: >
     apachectl start &&
