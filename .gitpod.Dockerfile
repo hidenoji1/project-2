@@ -2,7 +2,6 @@ FROM gitpod/workspace-full:latest
 
 ENV PHP_VERSION="7.2"
 ENV APACHE_DOCROOT_IN_REPO="laravel/public"
-ENV APACHE_LISTEN_PORT="8080"
 ARG MYSQL_ROOT_PASSWORD="123456"
 
 USER root
@@ -43,7 +42,7 @@ xdebug.var_display_max_data=-1 \n\
 xdebug.var_display_max_depth=-1 \n\
 " >> /etc/php/${PHP_VERSION}/mods-available/xdebug.ini 
 
-RUN sed -ri "s!Listen \*:8001!Listen \*:${APACHE_LISTEN_PORT}!" -i "/etc/apache2/apache2.conf" 
+RUN sed -ri "s!Listen \*:8001!Listen \*:8080!" -i "/etc/apache2/apache2.conf" 
 
 RUN mkdir /var/run/mysqld \
  && chown -R gitpod:gitpod /var/run/mysqld /usr/share/mysql /var/lib/mysql /var/log/mysql /etc/mysql \
