@@ -9,7 +9,7 @@ ports:
   onOpen: ignore
 tasks:
 - name: start up
-  init: cd $GITPOD_REPO_ROOT/laravel && composer install && php artisan key:generate --ansi
+  init: cd $GITPOD_REPO_ROOT/laravel && composer install
   command: >
     mysqld --daemonize &&
     apachectl start &&
