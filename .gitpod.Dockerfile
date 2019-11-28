@@ -85,7 +85,7 @@ USER gitpod
 
 RUN mysqld --daemonize --skip-grant-tables \
     && sleep 3 \
-    && ( mysql -uroot -e "CREATE DATABASE ${MYSQL_DATABASE}; CREATE USER ${MYSQL_USER_ID} IDENTIFIED BY \'${MYSQL_USER_PASSWORD}\';" ) \
+    && ( mysql -uroot -e "CREATE DATABASE ${MYSQL_DATABASE};" ) \
     && ( mysql -uroot -e "USE mysql; UPDATE user SET authentication_string=PASSWORD(\"${MYSQL_ROOT_PASSWORD}\") WHERE user='root'; UPDATE user SET plugin=\"mysql_native_password\" WHERE user='root'; FLUSH PRIVILEGES;" ) \
     && mysqladmin -uroot -p${MYSQL_ROOT_PASSWORD} shutdown;
     
