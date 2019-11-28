@@ -3,6 +3,9 @@ FROM gitpod/workspace-full:latest
 ENV PHP_VERSION="7.2"
 ENV APACHE_DOCROOT_IN_REPO="laravel/public"
 ARG MYSQL_ROOT_PASSWORD="123456"
+ARG MYSQL_DATABASE="laravel"
+ARG MYSQL_USER_ID="laravel"
+ARG MYSQL_USER_PASSWORD="laravel"
 
 USER root
 
@@ -83,6 +86,7 @@ USER gitpod
 RUN mysqld --daemonize --skip-grant-tables \
     && sleep 3 \
     && ( mysql -uroot -e "USE mysql; UPDATE user SET authentication_string=PASSWORD(\"${MYSQL_ROOT_PASSWORD}\") WHERE user='root'; UPDATE user SET plugin=\"mysql_native_password\" WHERE user='root'; FLUSH PRIVILEGES;" ) \
+    && ( mysql -uroot -p${MYSQL_ROOT_PASSWORD} -e "CREATE DATABASE ${MYSQL_DATABASE}; CREATE USER ${MYSQL_USER_ID}; GRANT ALL PRIVILEGES ON ${MYSQL_DATABASE}.\* TO ${MYSQL_USER_ID}@localhost IDENTIFIED BY \'${MYSQL_USER_PASSWORD}\';" ) \
     && mysqladmin -uroot -p${MYSQL_ROOT_PASSWORD} shutdown;
     
 USER root
