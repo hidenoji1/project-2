@@ -6,10 +6,10 @@ ports:
 - port: 9002
   onOpen: ignore
 tasks:
-- name: Laravel
+- name: start up
   init: cd $GITPOD_REPO_ROOT/laravel && composer install && php artisan key:generate --ansi
-- name: Apache
   command: >
+    mysqld --daemonize &&
     apachectl start &&
     multitail /var/log/apache2/access.log -I /var/log/apache2/error.log
 - init: echo 'init script' # runs during prebuild
